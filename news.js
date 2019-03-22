@@ -42,7 +42,18 @@ function selectionner_recherche(e)
 
 function init()
 {
+    var rech = $.cookie('recherches');
+    recherches = JSON.parse(rech);
 
+    recheches.forEach(element => {
+        rech = $(`<p class="titre-recherche"><label>${element}</label>`
+        + `<img src="croix30.jpg" class="icone-croix"/></p>`);
+        rech.appendTo("#recherches-stockees");
+
+        // Ajout fonctions
+        rech.children("label").attr("onclick","selectionner_recherche(this)");
+        rech.children("img").attr("onclick", "supprimer_recherche(this)");
+    });
 }
 
 

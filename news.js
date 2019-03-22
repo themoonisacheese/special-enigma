@@ -39,14 +39,26 @@ function supprimer_recherche(e)
 
 function selectionner_recherche(e)
 { 
-
-
+    var content = e.innerHTML;
+    $("#zone_saisie").val(content);
+    recherche_courante = content;
 }
 
 
 function init()
 {
+    var rech = $.cookie('recherches');
+    recherches = JSON.parse(rech);
 
+    recheches.forEach(element => {
+        rech = $(`<p class="titre-recherche"><label>${element}</label>`
+        + `<img src="croix30.jpg" class="icone-croix"/></p>`);
+        rech.appendTo("#recherches-stockees");
+
+        // Ajout fonctions
+        rech.children("label").attr("onclick","selectionner_recherche(this)");
+        rech.children("img").attr("onclick", "supprimer_recherche(this)");
+    });
 }
 
 

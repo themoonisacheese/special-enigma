@@ -51,7 +51,7 @@ function init()
     if (rech) {
         recherches = JSON.parse(rech);
 
-        recheches.forEach(element => {
+        recherches.forEach(element => {
         rech = $(`<p class="titre-recherche"><label>${element}</label>`
         + `<img src="croix30.jpg" class="icone-croix"/></p>`);
         rech.appendTo("#recherches-stockees");

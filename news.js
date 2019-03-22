@@ -9,8 +9,10 @@ function ajouter_recherche()
 
 function supprimer_recherche(e)
 { 
-
-
+    var element = e.parentElement;
+    $(element).remove();
+    var content = $(element).children("label").html();
+    recherches.splice(recherches.indexOf(content),1);
 }
 
 

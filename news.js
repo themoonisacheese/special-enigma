@@ -34,8 +34,9 @@ function supprimer_recherche(e)
 
 function selectionner_recherche(e)
 { 
-
-
+    var content = e.innerHTML;
+    $("#zone_saisie").val(content);
+    recherche_courante = content;
 }
 
 

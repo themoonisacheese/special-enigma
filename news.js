@@ -4,6 +4,22 @@ var recherche_courante_news=[]; // tableau d'objets de type resultats (avec titr
 
 function ajouter_recherche()
 {
+    // Empêche une sauvegarde de recherche vide
+    if ($("#zone_saisie").val().trim() == "") {
+        return;
+    }
+
+    // Sauvegarde dans variable recherches
+    recherches.push($("#zone_saisie").val());
+
+    // Ajout dans div recherches-stockees
+    let rech = $(`<p class="titre-recherche"><label>${$("#zone_saisie").val()}</label>`
+    + `<img src="croix30.jpg" class="icone-croix"/></p>`);
+    rech.appendTo("#recherches-stockees");
+
+    // Ajout fonctions
+    rech.children("label").attr("onclick","selectionner_recherche(this)");
+    rech.children("img").attr("onclick", "supprimer_recherche(this)");
 
 }
 
@@ -18,9 +34,8 @@ function supprimer_recherche(e)
 
 function selectionner_recherche(e)
 { 
-    var content = e.html();
-    $("#zone_saisie").val(content);
-    recherche_courante = content;
+
+
 }
 
 

@@ -50,7 +50,7 @@ function init()
     var rech = $.cookie('recherches');
     recherches = JSON.parse(rech);
 
-    recheches.forEach(element => {
+    recherches.forEach(element => {
         rech = $(`<p class="titre-recherche"><label>${element}</label>`
         + `<img src="croix30.jpg" class="icone-croix"/></p>`);
         rech.appendTo("#recherches-stockees");
@@ -64,8 +64,15 @@ function init()
 
 function rechercher_nouvelles()
 {
-	
-	
+    // Vidage resultats
+    $("#resultats").empty();
+
+    // Affichage wait
+    $("#wait").css('display','block').show();
+
+    // Appel AJAX
+    $.ajaxSetup({async:false});
+    $.get('search.php', maj_resultats);
 }
 
 

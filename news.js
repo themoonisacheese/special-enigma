@@ -51,11 +51,7 @@ function init()
     if (rech) {
         recherches = JSON.parse(rech);
 
-<<<<<<< HEAD
-    recherches.forEach(element => {
-=======
         recherches.forEach(element => {
->>>>>>> olivier
         rech = $(`<p class="titre-recherche"><label>${element}</label>`
         + `<img src="croix30.jpg" class="icone-croix"/></p>`);
         rech.appendTo("#recherches-stockees");
@@ -79,7 +75,7 @@ function rechercher_nouvelles()
 
     // Appel AJAX
     $.ajaxSetup({async:false});
-    $.get('search.php', maj_resultats);
+    $.get(`search.php?data=${$("#zone_saisie").val().trim()}`, maj_resultats);
 }
 
 

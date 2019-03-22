@@ -21,6 +21,8 @@ function ajouter_recherche()
     rech.children("label").attr("onclick","selectionner_recherche(this)");
     rech.children("img").attr("onclick", "supprimer_recherche(this)");
 
+    // Cookies
+    $.cookie("recherches", JSON.stringify(recherches));
 }
 
 function supprimer_recherche(e)
@@ -29,6 +31,9 @@ function supprimer_recherche(e)
     $(element).remove();
     var content = $(element).children("label").html();
     recherches.splice(recherches.indexOf(content),1);
+
+    // Cookies
+    $.cookie("recherches", JSON.stringify(recherches));
 }
 
 

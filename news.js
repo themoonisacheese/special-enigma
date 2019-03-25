@@ -51,11 +51,7 @@ function init()
     if (rech) {
         recherches = JSON.parse(rech);
 
-<<<<<<< HEAD
-    recherches.forEach(element => {
-=======
         recherches.forEach(element => {
->>>>>>> olivier
         rech = $(`<p class="titre-recherche"><label>${element}</label>`
         + `<img src="croix30.jpg" class="icone-croix"/></p>`);
         rech.appendTo("#recherches-stockees");
@@ -89,7 +85,7 @@ function maj_resultats(res)
     var resultats = JSON.parse(decodeEntities(res));
 
     resultats.forEach(element => {
-        var singleresult = $(`<p class="titre_result"><a class="titre_news" href="${element.url}" target="_blank">${element.titre}</a><span class="date_news">${format(element.date)}</span><span class="action_news" onclick="sauver_nouvelle(this)">< img src="horloge15.jpg"/></span></p> `);
+        var singleresult = $(`<p class="titre_result"><a class="titre_news" href="${element.url}" target="_blank">${element.titre}</a><span class="date_news">${format(element.date)}</span><span class="action_news" onclick="sauver_nouvelle(this)"><img src="horloge15.jpg"/></span></p> `);
         $("#resultats").append(singleresult);
     });
 

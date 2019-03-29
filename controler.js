@@ -7,10 +7,7 @@ controler.ajouter_recherche = function()
     }
 
     model.ajouter_recherche();    
-
     view.ajouter_recherche();
-   
-
 }
 
 controler.supprimer_recherche = function (e)
@@ -27,16 +24,17 @@ controler.selectionner_recherche = function(e)
     view.set_zone_saisie(content);
     model.set_recherche_courante(content);
 
-    var cookie = model.get_cookie_parse(model.get_recherche_courante);
+    var cookie = model.get_cookie_parse(model.get_recherche_courante());
 
     if (cookie != undefined) {
-      model.set_recherche_courante_news(cookie);
+        view.vider_resultat();
 
+        model.set_recherche_courante_news(cookie);
 
-      // Chargement résultats enregistrés
-      model.get_recherche_courante_news.forEach(element => {
-          view.ajouter_resultat(element);
-      });
+        // Chargement résultats enregistrés
+        model.get_recherche_courante_news().forEach(element => {
+            view.ajouter_resultat(element);
+        });
     }
 }
 
@@ -49,6 +47,9 @@ controler.init = function ()
             view.init_recherche(element);
         });
     }
+
+    // Initialisation zone_saisie
+    model.set_recherche_courante(view.get_zone_saisie());
 }
 
 

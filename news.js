@@ -26,7 +26,7 @@ function ajouter_recherche()
 }
 
 function supprimer_recherche(e)
-{ 
+{
     var element = e.parentElement;
     $(element).remove();
     var content = $(element).children("label").html();
@@ -38,10 +38,29 @@ function supprimer_recherche(e)
 
 
 function selectionner_recherche(e)
-{ 
+{
+    // Valeur zone de recherche
     var content = e.innerHTML;
     $("#zone_saisie").val(content);
     recherche_courante = content;
+
+    // Chargement valeurs du cookie
+    var cookie = $.cookie(recherche_courante);
+
+    // Chargement valeurs si le cookie n'est pas vide
+    if (cookie != undefined && cookie.trim() != "") {
+      recherche_courante_news = JSON.parse(cookie);
+
+      // Vidage resultats
+      $("#resultats").empty();
+
+      // Chargement résultats enregistrés
+      recherche_courante_news.forEach(element => {
+          var singleresult = $(`<p class="titre_result"><a class="titre_news" href="${element.url}" target="_blank">${element.titre}</a>`
+          + `<span class="date_news">${element.date}</span><span class="action_news" onclick="supprimer_nouvelle(this)"><img src="disk15.jpg"/></span></p> `);
+          $("#resultats").append(singleresult);
+      });
+    }
 }
 
 
@@ -61,7 +80,7 @@ function init()
         rech.children("img").attr("onclick", "supprimer_recherche(this)");
     });
     }
-    
+
 }
 
 
@@ -76,6 +95,14 @@ function rechercher_nouvelles()
     // Affichage wait
     $("#wait").css('display','block').show();
 
+    // Chargement valeurs du cookie
+    var cookie = $.cookie(recherche_courante);
+
+    // Chargement valeurs si le cookie n'est pas vide
+    if (cookie != undefined && cookie.trim() != "") {
+        recherche_courante_news = JSON.parse(cookie);
+    }
+
     // Appel AJAX
     $.ajaxSetup({async:false});
     $.get(`search.php?data=${recherche_courante}`, maj_resultats);
@@ -87,10 +114,26 @@ function maj_resultats(res)
     $("#wait").hide();
     var resultats = JSON.parse(decodeEntities(res));
 
-    // TODO: Corriger appel fonction
+    console.log(resultats);
+    console.log(recherche_courante_news);
+
     resultats.forEach(element => {
+
+        var click = "";
+        var img = "";
+
+        element.date = format(element.date);
+
+        if (indexOf(recherche_courante_news, element) != -1) { // Nouvelle existe
+            click = "supprimer_nouvelle(this)";
+            img = "disk15.jpg";
+        } else { // Nouvelle n'existe pas
+            click = "sauver_nouvelle(this)";
+            img = "horloge15.jpg";
+        }
+
         var singleresult = $(`<p class="titre_result"><a class="titre_news" href="${element.url}" target="_blank">${element.titre}</a>`
-        + `<span class="date_news">${format(element.date)}</span><span class="action_news" onclick="sauver_nouvelle(this)"><img src="horloge15.jpg"/></span></p> `);
+        + `<span class="date_news">${element.date}</span><span class="action_news" onclick="${click}"><img src="${img}"/></span></p> `);
         $("#resultats").append(singleresult);
     });
 
@@ -107,7 +150,7 @@ function sauver_nouvelle(e)
     var titre = $(e).parent().find(".titre_news").text();
     var date = $(e).parent().children(".date_news").text();
     var url = $(e).parent().find(".titre_news").attr("href");
-    
+
     var nouvelle = { titre: titre, date: date, url: url };
     if (indexOf(recherche_courante_news, nouvelle) == -1) {
         recherche_courante_news.push(nouvelle);
@@ -115,7 +158,7 @@ function sauver_nouvelle(e)
 
     // Sauvegarde dans le cookie
     $.cookie(recherche_courante, JSON.stringify(recherche_courante_news));
-	
+
 }
 
 
@@ -140,15 +183,3 @@ function supprimer_nouvelle(e)
     $.cookie(recherche_courante, JSON.stringify(recherche_courante_news));
 
 }
-
-
-
-
-
-	
-
-
-
-
-
-

@@ -70,3 +70,14 @@ function setCookie(cname, cvalue, exdays)
     	var expires = "expires="+d.toUTCString();
     	document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
 	}
+
+// Comparer deux éléments d'un tableau par date
+	function comparerParDate(a, b) {
+		let fA = new Date(a);
+		let fB = new Date(b);
+		if (fA.date < fB.date)
+			return 1;
+		if (fA.date > fB.date)
+			return -1;
+		return 0;
+	}

@@ -42,12 +42,15 @@ controler.selectionner_recherche = function(e)
 controler.init = function ()
 {   
     var rech = model.get_cookie_parse('recherches');
+    model.set_recherches(rech);
+    
     if (rech) {
         rech.forEach(element => {
             view.init_recherche(element);
         });
     }
 
+    // Lancement recherche par appui sur entrée
     $("#zone_saisie").keyup(function(e) {
         if(e.which == 13) {
             e.preventDefault();
@@ -80,6 +83,7 @@ controler.maj_resultats = function (res)
 
     var resultats = JSON.parse(decodeEntities(res));
 
+    resultats.sort(comparerParDate);
 
     resultats.forEach(element => {
         view.ajouter_resultat(element);

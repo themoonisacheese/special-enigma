@@ -5,15 +5,21 @@ model.recherche_courante_news=[]; // tableau d'objets de type resultats (avec ti
 
 
 model.ajouter_recherche = function() {
+
     this.recherches.push(view.get_zone_saisie());
-    $.cookie("recherches", JSON.stringify(this.recherches), { expires: 1000 });
+    
+    model.set_cookie("recherches", this.recherches);
 }
 
 model.supprimer_recherche = function (content) {
     model.recherches.splice(model.recherches.indexOf(content),1);
 
-    // Cookies
-    $.cookie("recherches", JSON.stringify(this.recherches), { expires: 1000 });
+    // Sauvegarde
+    model.set_cookie("recherches", this.recherches);
+}
+
+model.set_recherches = function (rech) {
+    this.recherches = rech;
 }
 
 model.get_recherche_courante = function(){
@@ -37,15 +43,19 @@ model.set_recherche_courante_news = function(e) {
 }
 
 model.get_cookie_parse = function(e){
-    var cookie = $.cookie(e);
-    if (cookie != undefined /*&& cookie.trim() != ""*/) {
-        return JSON.parse(cookie);
+
+    // var resultats = $.cookie(e); // Version cookies
+    var resultats = localStorage.getItem(e); // Version WebStorage
+
+    if (resultats != undefined) {
+        return JSON.parse(resultats);
     }
     return undefined;
 }
 
 model.set_cookie= function(cookie, obj){
-    $.cookie(cookie, JSON.stringify(obj), {expires: 1000});
+    // $.cookie(cookie, JSON.stringify(obj), {expires: 1000}); // Version cookies
+    localStorage.setItem(cookie, JSON.stringify(obj)); // WebStorage
 }
 
 model.le_seul_appel = function(){

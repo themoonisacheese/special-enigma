@@ -76,3 +76,9 @@ model.cond_splice = function(nouvelle){
         this.recherche_courante_news.splice(index, 1);
     }
 }
+
+model.autocomplete = function() {
+    $("#zone_saisie").autocomplete({
+            source: this.recherches
+        });
+}

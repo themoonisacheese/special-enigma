@@ -60,6 +60,7 @@ controler.init = function ()
 
     // Initialisation zone_saisie
     model.set_recherche_courante(view.get_zone_saisie());
+    model.autocomplete();
 }
 
 

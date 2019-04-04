@@ -48,6 +48,13 @@ controler.init = function ()
         });
     }
 
+    $("#zone_saisie").keyup(function(e) {
+        if(e.which == 13) {
+            e.preventDefault();
+            controler.rechercher_nouvelles();
+        }
+    })
+
     // Initialisation zone_saisie
     model.set_recherche_courante(view.get_zone_saisie());
 }
@@ -56,7 +63,7 @@ controler.init = function ()
 controler.rechercher_nouvelles = function ()
 {
     // Set recherche_courante
-    recherche_courante = view.get_zone_saisie();
+    model.set_recherche_courante(view.get_zone_saisie());
 
     // Vidage resultats
     view.vider_resultat();
